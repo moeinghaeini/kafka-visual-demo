@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kafka Visual Demo - Multi-Producer Simulation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-stream"></i> Kafka Visual Demo</h1>
+                <div class="header-controls">
+                    <button id="startDemo" class="btn btn-primary">
+                        <i class="fas fa-play"></i> Start Demo
+                    </button>
+                    <button id="nextStep" class="btn btn-secondary" disabled>
+                        <i class="fas fa-step-forward"></i> Next Step
+                    </button>
+                    <button id="autoDemo" class="btn btn-success">
+                        <i class="fas fa-magic"></i> Auto Demo
+                    </button>
+                    <button id="stopDemo" class="btn btn-danger" disabled>
+                        <i class="fas fa-stop"></i> Stop
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Demo Instructions -->
+        <div id="demoInstructions" class="demo-instructions hidden">
+            <div class="instruction-content">
+                <h3 id="instructionTitle">Welcome to Kafka Visual Demo!</h3>
+                <p id="instructionText">Let's explore how Apache Kafka works with multiple producers and consumers.</p>
+                <div class="instruction-progress">
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <span id="progressText">Step 1 of 6</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Stats Dashboard -->
+            <div class="stats-dashboard">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-database"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalTopics">0</div>
+                        <div class="stat-label">Topics</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-paper-plane"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalProducers">0</div>
+                        <div class="stat-label">Producers</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-download"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalConsumers">0</div>
+                        <div class="stat-label">Consumers</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalMessages">0</div>
+                        <div class="stat-label">Messages</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kafka Architecture Visualization -->
+            <div class="kafka-visualization">
+                <!-- Producers Section -->
+                <div class="producers-section">
+                    <h3><i class="fas fa-paper-plane"></i> Producers</h3>
+                    <div id="producersContainer" class="producers-container">
+                        <!-- Producers will be dynamically added here -->
+                    </div>
+                </div>
+
+                <!-- Topics Section -->
+                <div class="topics-section">
+                    <h3><i class="fas fa-database"></i> Topics & Partitions</h3>
+                    <div id="topicsContainer" class="topics-container">
+                        <!-- Topics will be dynamically added here -->
+                    </div>
+                </div>
+
+                <!-- Consumers Section -->
+                <div class="consumers-section">
+                    <h3><i class="fas fa-download"></i> Consumers</h3>
+                    <div id="consumersContainer" class="consumers-container">
+                        <!-- Consumers will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message Flow Visualization -->
+            <div class="message-flow">
+                <h3><i class="fas fa-exchange-alt"></i> Message Flow</h3>
+                <div id="messageFlowContainer" class="message-flow-container">
+                    <!-- Message flow animations will be shown here -->
+                </div>
+            </div>
+
+            <!-- Message History -->
+            <div class="message-history">
+                <h3><i class="fas fa-history"></i> Recent Messages</h3>
+                <div id="messageHistoryContainer" class="message-history-container">
+                    <!-- Recent messages will be displayed here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Message Detail Modal -->
+    <div id="messageModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Message Details</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <pre id="messageDetails"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
