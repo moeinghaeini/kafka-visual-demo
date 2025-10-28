@@ -7,13 +7,19 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="app">
         <!-- Header -->
         <header class="header">
             <div class="header-content">
-                <h1><i class="fas fa-stream"></i> Kafka Visual Demo</h1>
+                <h1><i class="fas fa-stream"></i> Kafka Visual Demo
+                    <span class="tooltip">
+                        <i class="fas fa-question-circle help-icon"></i>
+                        <span class="tooltiptext">Interactive demonstration of Apache Kafka concepts including producers, topics, partitions, consumers, and message flow</span>
+                    </span>
+                </h1>
                 <div class="header-controls">
                     <button id="startDemo" class="btn btn-primary">
                         <i class="fas fa-play"></i> Start Demo
@@ -27,6 +33,48 @@
                     <button id="stopDemo" class="btn btn-danger" disabled>
                         <i class="fas fa-stop"></i> Stop
                     </button>
+                    <button id="themeToggle" class="btn btn-outline">
+                        <i class="fas fa-moon"></i> Dark Mode
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Advanced Controls -->
+            <div class="advanced-controls">
+                <div class="control-group">
+                    <h4><i class="fas fa-cog"></i> Advanced Controls
+                        <span class="tooltip">
+                            <i class="fas fa-question-circle help-icon"></i>
+                            <span class="tooltiptext">Manage data persistence, replay messages, and clear simulation data</span>
+                        </span>
+                    </h4>
+                    <div class="control-buttons">
+                        <button id="togglePersistence" class="btn btn-outline">
+                            <i class="fas fa-save"></i> Toggle Persistence
+                        </button>
+                        <button id="persistData" class="btn btn-outline">
+                            <i class="fas fa-download"></i> Save Data
+                        </button>
+                        <button id="clearData" class="btn btn-outline btn-warning">
+                            <i class="fas fa-trash"></i> Clear All Data
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h4><i class="fas fa-replay"></i> Message Replay</h4>
+                    <div class="replay-controls">
+                        <select id="replayTopic" class="form-select">
+                            <option value="">Select Topic</option>
+                        </select>
+                        <div class="replay-range">
+                            <input type="number" id="fromOffset" placeholder="From Offset" min="0" class="form-input">
+                            <input type="number" id="toOffset" placeholder="To Offset" min="0" class="form-input">
+                        </div>
+                        <button id="replayMessages" class="btn btn-outline">
+                            <i class="fas fa-play"></i> Replay Messages
+                        </button>
+                    </div>
                 </div>
             </div>
         </header>
@@ -104,6 +152,34 @@
                         <!-- Consumers will be dynamically added here -->
                     </div>
                 </div>
+
+                <!-- Consumer Groups Section -->
+                <div class="consumer-groups-section">
+                    <h3><i class="fas fa-users"></i> Consumer Groups</h3>
+                    <div id="consumerGroupsContainer" class="consumer-groups-container">
+                        <!-- Consumer groups will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Metrics -->
+            <div class="real-time-metrics">
+                <h3><i class="fas fa-chart-line"></i> Real-time Metrics
+                    <span class="tooltip">
+                        <i class="fas fa-question-circle help-icon"></i>
+                        <span class="tooltiptext">Live performance metrics showing message throughput and latency distribution</span>
+                    </span>
+                </h3>
+                <div class="metrics-grid">
+                    <div class="metric-chart">
+                        <h4>Message Throughput</h4>
+                        <canvas id="throughputChart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="metric-chart">
+                        <h4>Latency Distribution</h4>
+                        <canvas id="latencyChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
             </div>
 
             <!-- Message Flow Visualization -->
@@ -116,7 +192,31 @@
 
             <!-- Message History -->
             <div class="message-history">
-                <h3><i class="fas fa-history"></i> Recent Messages</h3>
+                <div class="message-history-header">
+                    <h3><i class="fas fa-history"></i> Recent Messages</h3>
+                    <div class="message-controls">
+                        <div class="search-container">
+                            <input type="text" id="messageSearch" placeholder="Search messages..." class="search-input">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                        <select id="messageFilter" class="filter-select">
+                            <option value="">All Topics</option>
+                        </select>
+                        <select id="messageTypeFilter" class="filter-select">
+                            <option value="">All Types</option>
+                            <option value="login">Login</option>
+                            <option value="order_created">Order Created</option>
+                            <option value="payment_processed">Payment</option>
+                            <option value="page_view">Page View</option>
+                            <option value="click">Click</option>
+                            <option value="conversion">Conversion</option>
+                            <option value="iot">IoT Data</option>
+                        </select>
+                        <button id="clearFilters" class="btn btn-outline btn-sm">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                    </div>
+                </div>
                 <div id="messageHistoryContainer" class="message-history-container">
                     <!-- Recent messages will be displayed here -->
                 </div>
